@@ -1,8 +1,11 @@
+import Logo from "../logo";
 import NavBar from "../navbar";
+import styles from "./styles.module.scss";
 
 const Header = () => {
   return (
-    <header>
+    <header className={styles.header}>
+      <Logo />
       <NavBar />
     </header>
   );
