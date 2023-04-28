@@ -22,6 +22,7 @@ export const myTheme: MantineThemeOverride = {
           lineHeight: "20px",
           textTransform: "capitalize",
           display: "inline-block",
+          padding: "0 30px",
           ...theme.fn.hover({ textDecoration: "none" }),
         },
       }),

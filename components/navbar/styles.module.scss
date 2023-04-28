@@ -1,0 +1,8 @@
+.nav {
+  display: flex;
+  justify-content: center;
+
+  & > :nth-child(n) {
+    flex-basis: 190px;
+  }
+}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Anchor } from "@mantine/core";
 import { useRouter } from "next/router";
+import styles from "./styles.module.scss";
 
 const paths = [
   { id: "path-1", href: "/vacancies", name: "поиск вакансий" },
@@ -11,7 +12,7 @@ const NavBar = () => {
   const { pathname } = useRouter();
 
   return (
-    <div>
+    <div className={styles.nav}>
       {paths.map((item) => (
         <Anchor
           key={item.id}
