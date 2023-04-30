@@ -1,6 +1,7 @@
 export type VacanciesParamsType = {
   count?: number;
   page?: number;
+  keyword?: string;
 };
 
 export type VacancyType = {
