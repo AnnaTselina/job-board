@@ -1,6 +1,6 @@
 import { Button, TextInput } from "@mantine/core";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type SearchBarPropsType = {
   onSearchClick: (keyword: string) => void;
@@ -11,17 +11,9 @@ const SearchBar = ({ intialValue = "", onSearchClick }: SearchBarPropsType) => {
   const [value, setValue] = useState(intialValue);
   const ref = useRef<HTMLInputElement>(null);
 
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     onSearchClick(value);
-  }, [value]);
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.style.fontSize = "14px";
-      ref.current.style.height = "48px";
-      ref.current.style.paddingLeft = "36px";
-    }
-  }, []);
+  };
 
   useEffect(() => {
     if (ref.current) {

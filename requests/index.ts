@@ -11,6 +11,7 @@ export const getVacancies = ({ count, page, keyword }: VacanciesParamsType) => {
   const parameters = [
     `count=${count || DEFAULT_PAGE_SIZE}`,
     `page=${page || DEFAULT_PAGE}`,
+    `published=1`,
   ];
 
   if (keyword) {

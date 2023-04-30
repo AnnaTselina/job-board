@@ -31,7 +31,6 @@ const VacancyCard = ({ vacancy }: { vacancy: VacancyType }) => {
     <Card
       padding="md"
       radius="md"
-      withBorder
       component={Link}
       href={`${URL_PATHS.vacancies}/${vacancy.id}`}
     >

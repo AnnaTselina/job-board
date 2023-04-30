@@ -46,7 +46,7 @@ export const myTheme: MantineThemeOverride = {
     Card: {
       styles: (theme) => ({
         root: {
-          borderColor: theme.colors.grey[2],
+          border: `1px solid ${theme.colors.grey[2]}`,
           marginBottom: "16px",
         },
       }),
@@ -84,6 +84,16 @@ export const myTheme: MantineThemeOverride = {
           },
         }),
       },
+    },
+    TextInput: {
+      styles: (theme) => ({
+        input: {
+          fontSize: "14px",
+          height: "48px",
+          paddingLeft: "36px",
+          borderColor: theme.colors.grey[2],
+        },
+      }),
     },
   },
 };
