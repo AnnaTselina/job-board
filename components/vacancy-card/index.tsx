@@ -23,17 +23,21 @@ const VacancyCard = ({ vacancy }: { vacancy: VacancyType }) => {
     }
   };
 
+  const onAddToSaved = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+  };
+
   return (
-    <Card padding="md" radius="md" withBorder>
+    <Card
+      padding="md"
+      radius="md"
+      withBorder
+      component={Link}
+      href={`${URL_PATHS.vacancies}/${vacancy.id}`}
+    >
       <Group position="apart">
-        <Text
-          component={Link}
-          href={`${URL_PATHS.vacancies}/${vacancy.id}`}
-          variant="heading"
-        >
-          {vacancy.profession}
-        </Text>
-        <ActionIcon variant="transparent">
+        <Text variant="heading">{vacancy.profession}</Text>
+        <ActionIcon variant="transparent" onClick={onAddToSaved}>
           <Image src="/icons/star.svg" alt="star" width={22} height={22} />
         </ActionIcon>
       </Group>
@@ -47,14 +51,14 @@ const VacancyCard = ({ vacancy }: { vacancy: VacancyType }) => {
         )}
         <Text>{vacancy.type_of_work.title}</Text>
       </Group>
-      <Group spacing="xs">
+      <Group spacing={0}>
         <Image
           src="/icons/location.svg"
           alt="location"
           width={16}
           height={19}
         />
-        <Text>{vacancy.town.title}</Text>
+        <Text sx={{ marginLeft: "12px" }}>{vacancy.town.title}</Text>
       </Group>
     </Card>
   );
