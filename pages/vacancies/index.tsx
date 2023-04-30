@@ -17,7 +17,10 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
 
   return (
     <div className="centered">
-      <SearchBar onSearchClick={onSearchClick} />
+      <SearchBar
+        onSearchClick={onSearchClick}
+        intialValue={router.query.keyword}
+      />
       <VacanciesList vacancies={vacancies} />
     </div>
   );

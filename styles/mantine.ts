@@ -72,5 +72,18 @@ export const myTheme: MantineThemeOverride = {
         }),
       },
     },
+    Button: {
+      variants: {
+        primary: (theme) => ({
+          root: {
+            backgroundColor: theme.colors.blue[0],
+            padding: "4px 20px",
+            color: theme.colors.grey[0],
+            borderRadius: "8px",
+            fontWeight: 500,
+          },
+        }),
+      },
+    },
   },
 };
