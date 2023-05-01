@@ -1,36 +1,78 @@
 import { getVacancies, getVacancy } from "@/requests";
 import { VacancyType, IVacancyParams } from "@/types";
 import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Vacancy = ({ vacancy }: { vacancy: VacancyType }) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading.....</div>;
+  }
+
   return <h1>Vacancy page</h1>;
 };
 
 export default Vacancy;
 
-export const getStaticPaths = async () => {
-  const response = await getVacancies({});
-  const { data: { objects = [] } = {} } = response;
+// Из документации:
+// Максимальное количество сущностей, выдаваемых API равно 500.
+// Максимальное число результатов - 100 (в одном запросе).
+//
+// Делаем 5 запросов (500/100) для получение id сущностей для генерации страниц вакансий (возможно наиболее вероятны в выдаче).
+// В случае если страница не была создана при билде, страница генериться в рантайме и помещается в /pages.
+// Страницы перегенерируются 1 раз день, либо добавляются по запросу.
 
-  const paths = objects.map(({ id }: { id: string }) => ({
-    params: { id: id.toString() },
-  }));
+// From documentation:
+// The maximum number of entities returned by the API is 500.
+// The maximum number of results is 100 (in one request).
+//
+// Making 5 requests (500/100) to get entity ids to generate vacancy pages (probably the most likely to be in the search results).
+// If the page was not created during the build, the page is generated at runtime and put in /pages.
+// Pages are regenerated once a day, or added upon request.
+
+//TODO: refactor
+export const getStaticPaths = async () => {
+  const paths = [];
+
+  for (let i = 1; i <= 5; i++) {
+    const response = await getVacancies({ page: i, count: 100 });
+    const { data: { objects = [] } = {} } = response;
+
+    const newPaths = objects.map(({ id }: { id: string }) => ({
+      params: { id: id.toString() },
+    }));
+
+    paths.push(...newPaths);
+  }
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params as IVacancyParams;
-  const response = await getVacancy(id);
+  try {
+    const { id } = context.params as IVacancyParams;
+    const response = await getVacancy(id);
 
-  const { data } = response;
+    const { data } = response;
 
-  return {
-    props: {
-      vacancy: data,
-    },
-  };
+    if (!data) {
+      throw Error();
+    }
+
+    return {
+      props: {
+        vacancy: data,
+        revalidate: 86400, //every day
+      },
+    };
+  } catch (e) {
+    return {
+      notFound: true,
+    };
+  }
 };
