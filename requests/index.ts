@@ -32,3 +32,16 @@ export const getVacancies = ({ count, page, keyword }: VacanciesParamsType) => {
     },
   });
 };
+
+export const getVacancy = (id: string) => {
+  let url = `${process.env.API_HOST}${URL_PATHS.vacancies}/${id}`;
+
+  return axios({
+    method: "get",
+    url,
+    headers: {
+      "x-secret-key": process.env.X_SECRET_KEY,
+      "x-api-app-id": process.env.X_API_APP_ID,
+    },
+  });
+};

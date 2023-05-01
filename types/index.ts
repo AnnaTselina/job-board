@@ -1,3 +1,5 @@
+import { ParsedUrlQuery } from "querystring";
+
 export type VacanciesParamsType = {
   count?: number;
   page?: number;
@@ -17,3 +19,7 @@ export type VacancyType = {
   payment_from: number | null;
   currency: string;
 };
+
+export interface IVacancyParams extends ParsedUrlQuery {
+  id: string;
+}
