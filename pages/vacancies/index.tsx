@@ -28,7 +28,11 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
       <div className="centered">
         <SearchBar
           onSearchClick={onSearchClick}
-          intialValue={router.query.keyword}
+          intialValue={
+            Array.isArray(router.query.keyword)
+              ? router.query.keyword.join("")
+              : router.query.keyword
+          }
         />
         <VacanciesList vacancies={vacancies} />
       </div>
