@@ -1,6 +1,7 @@
 import SearchBar from "@/components/search-bar";
 import VacanciesList from "@/components/vacancies-list";
-import { getVacancies } from "@/requests";
+import { parseHeader } from "@/helpers/parse-header";
+import vacanciesAPI from "@/requests";
 import { VacancyType } from "@/types";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -44,28 +45,39 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
 export default Vacancies;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const {
-    query,
-    req: {
-      cookies: { access_token },
-    },
-  } = context;
+  try {
+    const { query, req, res } = context;
 
-  const response = await getVacancies(
-    {
-      ...query,
-      count: DEFAULT_PAGE_SIZE,
-      page: Number(query.page) || 0,
-    },
-    access_token
-  );
+    let access_token = req.cookies.access_token;
 
-  const data = await response.json();
-  const { objects = [] } = data;
+    if (!access_token) {
+      access_token = parseHeader(res.req.headers["set-cookie"]);
+    }
 
-  return {
-    props: {
-      vacancies: objects,
-    },
-  };
+    const response = await vacanciesAPI.getVacancies(
+      {
+        ...query,
+        count: DEFAULT_PAGE_SIZE,
+        page: Number(query.page) || 0,
+      },
+      access_token
+    );
+
+    const data = await response.json();
+    const { objects = [] } = data;
+
+    if (!objects.length) {
+      throw Error();
+    }
+
+    return {
+      props: {
+        vacancies: objects,
+      },
+    };
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
 };

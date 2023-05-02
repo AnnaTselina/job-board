@@ -1,8 +1,8 @@
 import VacancyCard from "@/components/vacancy-card";
-import { getVacancies, getVacancy } from "@/requests";
+import vacanciesAPI from "@/requests";
 import { VacancyType, IVacancyParams } from "@/types";
-import { Card, Container, Title } from "@mantine/core";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { Card, Container } from "@mantine/core";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import parse from "html-react-parser";
 import Head from "next/head";
@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     } = context;
 
     const { id } = params as IVacancyParams;
-    const response = await getVacancy(id, access_token);
+    const response = await vacanciesAPI.getVacancy(id, access_token);
     const data = await response.json();
 
     if (!data) {
