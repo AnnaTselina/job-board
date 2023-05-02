@@ -43,14 +43,25 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
 
 export default Vacancies;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const response = await getVacancies({
-    ...query,
-    count: DEFAULT_PAGE_SIZE,
-    page: Number(query.page) || 0,
-  });
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const {
+    query,
+    req: {
+      cookies: { access_token },
+    },
+  } = context;
 
-  const { data: { objects = [] } = {} } = response;
+  const response = await getVacancies(
+    {
+      ...query,
+      count: DEFAULT_PAGE_SIZE,
+      page: Number(query.page) || 0,
+    },
+    access_token
+  );
+
+  const data = await response.json();
+  const { objects = [] } = data;
 
   return {
     props: {

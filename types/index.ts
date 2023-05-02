@@ -6,6 +6,13 @@ export type VacanciesParamsType = {
   keyword?: string;
 };
 
+export type VacanciesParamsTypeParsed = {
+  count?: string;
+  page?: string;
+  keyword?: string;
+  published: string;
+};
+
 export type VacancyType = {
   id: string;
   profession: string;

@@ -4,7 +4,7 @@ import { VacancyType, IVacancyParams } from "@/types";
 import { Card, Container, Title } from "@mantine/core";
 import { GetServerSideProps, GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import parse, { Element, domToReact } from "html-react-parser";
+import parse from "html-react-parser";
 import Head from "next/head";
 
 const Vacancy = ({ vacancy }: { vacancy: VacancyType }) => {
@@ -35,10 +35,16 @@ export default Vacancy;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const { id } = context.params as IVacancyParams;
-    const response = await getVacancy(id);
+    const {
+      params,
+      req: {
+        cookies: { access_token },
+      },
+    } = context;
 
-    const { data } = response;
+    const { id } = params as IVacancyParams;
+    const response = await getVacancy(id, access_token);
+    const data = await response.json();
 
     if (!data) {
       throw Error();
