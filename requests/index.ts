@@ -7,9 +7,7 @@ export const getVacancies = ({ count, page, keyword }: VacanciesParamsType) => {
 
   const parameters = [`published=1`];
 
-  //TODO: add typechecking
-
-  if (count) {
+  if (typeof count === "number") {
     parameters.push(`count=${count}`);
   }
 
@@ -17,7 +15,7 @@ export const getVacancies = ({ count, page, keyword }: VacanciesParamsType) => {
     parameters.push(`keyword=${keyword}`);
   }
 
-  if (page) {
+  if (typeof page === "number") {
     parameters.push(`page=${page}`);
   }
 

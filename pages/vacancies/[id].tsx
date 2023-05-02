@@ -5,6 +5,7 @@ import { Card, Container, Title } from "@mantine/core";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import parse, { Element, domToReact } from "html-react-parser";
+import Head from "next/head";
 
 const Vacancy = ({ vacancy }: { vacancy: VacancyType }) => {
   const router = useRouter();
@@ -14,14 +15,19 @@ const Vacancy = ({ vacancy }: { vacancy: VacancyType }) => {
   }
 
   return (
-    <Container maw={773} p={0}>
-      <VacancyCard vacancy={vacancy} showAsLink={false} />
-      {!!vacancy.vacancyRichText && (
-        <Card padding="md" radius="md">
-          {parse(vacancy.vacancyRichText)}
-        </Card>
-      )}
-    </Container>
+    <>
+      <Head>
+        <title>{vacancy.profession}</title>
+      </Head>
+      <Container maw={773} p={0}>
+        <VacancyCard vacancy={vacancy} showAsLink={false} />
+        {!!vacancy.vacancyRichText && (
+          <Card padding="md" radius="md">
+            {parse(vacancy.vacancyRichText)}
+          </Card>
+        )}
+      </Container>
+    </>
   );
 };
 
@@ -47,7 +53,7 @@ export default Vacancy;
 export const getStaticPaths = async () => {
   const paths = [];
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 0; i < 5; i++) {
     const response = await getVacancies({ page: i, count: 100 });
     const { data: { objects = [] } = {} } = response;
 

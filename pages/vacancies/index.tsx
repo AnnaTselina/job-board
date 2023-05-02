@@ -3,6 +3,7 @@ import VacanciesList from "@/components/vacancies-list";
 import { getVacancies } from "@/requests";
 import { VacancyType } from "@/types";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 const DEFAULT_PAGE_SIZE = 4;
@@ -24,6 +25,9 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
 
   return (
     <>
+      <Head>
+        <title>Вакансии</title>
+      </Head>
       <SearchBar
         onSearchClick={onSearchClick}
         intialValue={
@@ -43,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const response = await getVacancies({
     ...query,
     count: DEFAULT_PAGE_SIZE,
-    page: Number(query.page) || 1,
+    page: Number(query.page) || 0,
   });
 
   const { data: { objects = [] } = {} } = response;
