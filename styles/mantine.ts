@@ -95,5 +95,15 @@ export const myTheme: MantineThemeOverride = {
         },
       }),
     },
+    Container: {
+      variants: {
+        centered: () => ({
+          root: {
+            maxWidth: "1120px",
+            margin: "0 auto",
+          },
+        }),
+      },
+    },
   },
 };
