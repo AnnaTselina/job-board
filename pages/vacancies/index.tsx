@@ -2,7 +2,6 @@ import SearchBar from "@/components/search-bar";
 import VacanciesList from "@/components/vacancies-list";
 import { getVacancies } from "@/requests";
 import { VacancyType } from "@/types";
-import { Container } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
@@ -24,19 +23,17 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
   };
 
   return (
-    <Container bg="grey.1" maw="unset" pt={40}>
-      <div className="centered">
-        <SearchBar
-          onSearchClick={onSearchClick}
-          intialValue={
-            Array.isArray(router.query.keyword)
-              ? router.query.keyword.join("")
-              : router.query.keyword
-          }
-        />
-        <VacanciesList vacancies={vacancies} />
-      </div>
-    </Container>
+    <>
+      <SearchBar
+        onSearchClick={onSearchClick}
+        intialValue={
+          Array.isArray(router.query.keyword)
+            ? router.query.keyword.join("")
+            : router.query.keyword
+        }
+      />
+      <VacanciesList vacancies={vacancies} />
+    </>
   );
 };
 

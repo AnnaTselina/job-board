@@ -1,10 +1,16 @@
 import { URL_PATHS } from "@/helpers/constants";
 import { VacancyType } from "@/types";
-import { Card, Text, Group, Indicator, ActionIcon } from "@mantine/core";
+import { Card, Text, Group, Indicator, ActionIcon, Title } from "@mantine/core";
 import Image from "next/image";
 import Link from "next/link";
 
-const VacancyCard = ({ vacancy }: { vacancy: VacancyType }) => {
+const VacancyCard = ({
+  vacancy,
+  showAsLink = true,
+}: {
+  vacancy: VacancyType;
+  showAsLink?: boolean;
+}) => {
   const getSalary = (vacancy: VacancyType) => {
     const { payment_from, payment_to, currency } = vacancy;
 
@@ -31,11 +37,19 @@ const VacancyCard = ({ vacancy }: { vacancy: VacancyType }) => {
     <Card
       padding="md"
       radius="md"
-      component={Link}
       href={`${URL_PATHS.vacancies}/${vacancy.id}`}
+      {...(showAsLink ? { component: Link } : { mb: 20 })}
     >
-      <Group position="apart">
-        <Text variant="heading">{vacancy.profession}</Text>
+      <Group position="apart" align="flex-start">
+        {showAsLink ? (
+          <Text variant="heading" maw={"90%"}>
+            {vacancy.profession}
+          </Text>
+        ) : (
+          <Title size={28} lh="33.89px" mb={16} maw={"90%"}>
+            {vacancy.profession}
+          </Title>
+        )}
         <ActionIcon variant="transparent" onClick={onAddToSaved}>
           <Image src="/icons/star.svg" alt="star" width={22} height={22} />
         </ActionIcon>

@@ -1,8 +1,10 @@
+import VacancyCard from "@/components/vacancy-card";
 import { getVacancies, getVacancy } from "@/requests";
 import { VacancyType, IVacancyParams } from "@/types";
+import { Card, Container, Title } from "@mantine/core";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import parse, { Element, domToReact } from "html-react-parser";
 
 const Vacancy = ({ vacancy }: { vacancy: VacancyType }) => {
   const router = useRouter();
@@ -11,7 +13,16 @@ const Vacancy = ({ vacancy }: { vacancy: VacancyType }) => {
     return <div>Loading.....</div>;
   }
 
-  return <h1>Vacancy page</h1>;
+  return (
+    <Container maw={773} p={0}>
+      <VacancyCard vacancy={vacancy} showAsLink={false} />
+      {!!vacancy.vacancyRichText && (
+        <Card padding="md" radius="md">
+          {parse(vacancy.vacancyRichText)}
+        </Card>
+      )}
+    </Container>
+  );
 };
 
 export default Vacancy;

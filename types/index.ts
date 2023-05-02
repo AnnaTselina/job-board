@@ -15,9 +15,10 @@ export type VacancyType = {
   type_of_work: {
     title: string;
   };
-  payment_to: number | null;
-  payment_from: number | null;
+  payment_to?: number;
+  payment_from?: number;
   currency: string;
+  vacancyRichText?: string;
 };
 
 export interface IVacancyParams extends ParsedUrlQuery {
