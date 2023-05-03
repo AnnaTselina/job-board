@@ -124,5 +124,26 @@ export const myTheme: MantineThemeOverride = {
         }),
       },
     },
+    Select: {
+      styles: (theme) => ({
+        input: {
+          borderRadius: "8px",
+          height: "42px",
+          borderColor: theme.colors.grey[3],
+          ":hover": {
+            borderColor: theme.colors.blue[0],
+          },
+          ":focus": {
+            borderColor: theme.colors.blue[0],
+          },
+        },
+        label: {
+          fontSize: "16px",
+          lineHeight: "19.36px",
+          fontWeight: 700,
+          marginBottom: "8px",
+        },
+      }),
+    },
   },
 };
