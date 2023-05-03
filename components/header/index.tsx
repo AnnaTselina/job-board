@@ -5,7 +5,7 @@ import NavBar from "../navbar";
 const Header = () => {
   return (
     <header>
-      <Container variant="centered">
+      <Container variant="centered" p={0}>
         <Group
           align="center"
           p={24}

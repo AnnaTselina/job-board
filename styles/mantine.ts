@@ -53,15 +53,6 @@ export const myTheme: MantineThemeOverride = {
     },
     Text: {
       variants: {
-        heading: (theme) => ({
-          root: {
-            fontSize: "20px",
-            lineHeight: "24.2px",
-            fontWeight: 600,
-            color: theme.colors.blue[0],
-            marginBottom: "12.5px",
-          },
-        }),
         logo: (theme) => ({
           root: {
             fontFamily: "Poppins",
@@ -101,6 +92,34 @@ export const myTheme: MantineThemeOverride = {
           root: {
             maxWidth: "1120px",
             margin: "0 auto",
+            padding: 0,
+          },
+        }),
+      },
+    },
+    Title: {
+      variants: {
+        cardHeading: () => ({
+          root: {
+            fontSize: "28px",
+            lineHeight: "33.89px",
+            marginBottom: "16px",
+          },
+        }),
+        cardHeadingLink: (theme) => ({
+          root: {
+            fontSize: "20px",
+            lineHeight: "24.2px",
+            fontWeight: 600,
+            color: theme.colors.blue[0],
+            marginBottom: "12.5px",
+          },
+        }),
+        groupHeading: () => ({
+          root: {
+            fontSize: "20px",
+            lineHeight: "20px",
+            fontWeight: 600,
           },
         }),
       },

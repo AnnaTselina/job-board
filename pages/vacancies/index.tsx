@@ -1,8 +1,10 @@
+import Filters from "@/components/filters";
 import SearchBar from "@/components/search-bar";
 import VacanciesList from "@/components/vacancies-list";
 import { parseHeader } from "@/helpers/parse-header";
 import vacanciesAPI from "@/requests";
 import { VacancyType } from "@/types";
+import { Container, Group } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -29,15 +31,20 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
       <Head>
         <title>Вакансии</title>
       </Head>
-      <SearchBar
-        onSearchClick={onSearchClick}
-        intialValue={
-          Array.isArray(router.query.keyword)
-            ? router.query.keyword.join("")
-            : router.query.keyword
-        }
-      />
-      <VacanciesList vacancies={vacancies} />
+      <Group align="start" position="apart">
+        <Filters />
+        <Container m={0} p={0} maw={773} w="100%">
+          <SearchBar
+            onSearchClick={onSearchClick}
+            intialValue={
+              Array.isArray(router.query.keyword)
+                ? router.query.keyword.join("")
+                : router.query.keyword
+            }
+          />
+          <VacanciesList vacancies={vacancies} />
+        </Container>
+      </Group>
     </>
   );
 };

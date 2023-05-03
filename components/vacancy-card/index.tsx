@@ -41,15 +41,13 @@ const VacancyCard = ({
       {...(showAsLink ? { component: Link } : { mb: 20 })}
     >
       <Group position="apart" align="flex-start">
-        {showAsLink ? (
-          <Text variant="heading" maw={"90%"}>
-            {vacancy.profession}
-          </Text>
-        ) : (
-          <Title size={28} lh="33.89px" mb={16} maw={"90%"}>
-            {vacancy.profession}
-          </Title>
-        )}
+        <Title
+          order={1}
+          variant={showAsLink ? "cardHeadingLink" : "cardHeading"}
+          maw={"90%"}
+        >
+          {vacancy.profession}
+        </Title>
         <ActionIcon variant="transparent" onClick={onAddToSaved}>
           <Image src="/icons/star.svg" alt="star" width={22} height={22} />
         </ActionIcon>

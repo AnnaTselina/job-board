@@ -19,7 +19,7 @@ const Vacancy = ({ vacancy }: { vacancy: VacancyType }) => {
       <Head>
         <title>{vacancy.profession}</title>
       </Head>
-      <Container maw={773} p={0}>
+      <Container p={0}>
         <VacancyCard vacancy={vacancy} showAsLink={false} />
         {!!vacancy.vacancyRichText && (
           <Card padding="md" radius="md">
