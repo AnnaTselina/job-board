@@ -59,8 +59,21 @@ export class JoboaredAPI {
     });
   }
 
+  getCatalogues(token?: string) {
+    let headers = new Headers(this.defaultHeaders);
+    const url = `${process.env.API_HOST}${URL_PATHS.catalogues}`;
+    if (token) {
+      headers.append("Authorization", `Bearer ${token}`);
+    }
+
+    return fetch(url, {
+      method: "GET",
+      headers: headers,
+    });
+  }
+
   validateSearchParams(params: VacanciesParamsType) {
-    const { count, page, keyword } = params;
+    const { count, page, keyword, catalogues } = params;
 
     const validatedParameters: VacanciesParamsTypeParsed = { published: "1" };
 
@@ -68,12 +81,16 @@ export class JoboaredAPI {
       validatedParameters.count = count.toString();
     }
 
+    if (typeof page === "number") {
+      validatedParameters.page = page.toString();
+    }
+
     if (keyword) {
       validatedParameters.keyword = keyword;
     }
 
-    if (typeof page === "number") {
-      validatedParameters.page = page.toString();
+    if (catalogues) {
+      validatedParameters.catalogues = catalogues;
     }
 
     return validatedParameters;

@@ -3,7 +3,7 @@ import SearchBar from "@/components/search-bar";
 import VacanciesList from "@/components/vacancies-list";
 import { parseHeader } from "@/helpers/parse-header";
 import vacanciesAPI from "@/requests";
-import { VacancyType } from "@/types";
+import { CatalogueType, VacancyType } from "@/types";
 import { Container, Group } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -11,7 +11,13 @@ import { useRouter } from "next/router";
 
 const DEFAULT_PAGE_SIZE = 4;
 
-const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
+const Vacancies = ({
+  vacancies,
+  catalogues,
+}: {
+  vacancies: VacancyType[];
+  catalogues: CatalogueType[];
+}) => {
   const router = useRouter();
 
   const updateRoute = (query: { [key: string]: string }) => {
@@ -25,6 +31,9 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
   const onSearchClick = (keyword: string) => {
     updateRoute({ keyword });
   };
+  const onChangeCatalogue = (id: string) => {
+    // updateRoute({ catalogues: id });
+  };
 
   return (
     <>
@@ -32,7 +41,15 @@ const Vacancies = ({ vacancies }: { vacancies: VacancyType[] }) => {
         <title>Вакансии</title>
       </Head>
       <Group align="start" position="apart">
-        <Filters />
+        <Filters
+          catalogues={catalogues}
+          onChangeCatalogue={onChangeCatalogue}
+          catalogueInitialValue={
+            Array.isArray(router.query.catalogues)
+              ? router.query.catalogues.join("")
+              : router.query.catalogues
+          }
+        />
         <Container m={0} p={0} maw={773} w="100%">
           <SearchBar
             onSearchClick={onSearchClick}
@@ -61,7 +78,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       access_token = parseHeader(res.req.headers["set-cookie"]);
     }
 
-    const response = await vacanciesAPI.getVacancies(
+    //TODO: use Promise.allsettled()
+
+    const vacanciesResponse = await vacanciesAPI.getVacancies(
       {
         ...query,
         count: DEFAULT_PAGE_SIZE,
@@ -70,16 +89,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       access_token
     );
 
-    const data = await response.json();
-    const { objects = [] } = data;
+    const vacanciesData = await vacanciesResponse.json();
+    const { objects = [] } = vacanciesData;
 
     if (!objects.length) {
       throw Error();
     }
 
+    const cataloguesResponse = await vacanciesAPI.getCatalogues(access_token);
+    const cataloguesData = await cataloguesResponse.json();
+
     return {
       props: {
         vacancies: objects,
+        catalogues: cataloguesData,
       },
     };
   } catch {

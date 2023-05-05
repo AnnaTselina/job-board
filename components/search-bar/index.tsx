@@ -1,6 +1,6 @@
 import { Button, TextInput } from "@mantine/core";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import SearchSvg from "public/icons/search.svg";
 
 type SearchBarPropsType = {
   onSearchClick: (keyword: string) => void;
@@ -30,9 +30,7 @@ const SearchBar = ({ intialValue = "", onSearchClick }: SearchBarPropsType) => {
       value={value}
       ref={ref}
       onChange={(event) => setValue(event.currentTarget.value)}
-      icon={
-        <Image src="/icons/search.svg" alt="search" width={12} height={12} />
-      }
+      icon={<SearchSvg />}
       placeholder="Введите название вакансии"
       radius={8}
       size="md"

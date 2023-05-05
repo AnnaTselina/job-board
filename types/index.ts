@@ -4,6 +4,7 @@ export type VacanciesParamsType = {
   count?: number;
   page?: number;
   keyword?: string;
+  catalogues?: string;
 };
 
 export type VacanciesParamsTypeParsed = {
@@ -11,6 +12,7 @@ export type VacanciesParamsTypeParsed = {
   page?: string;
   keyword?: string;
   published: string;
+  catalogues?: string;
 };
 
 export type VacancyType = {
@@ -31,3 +33,8 @@ export type VacancyType = {
 export interface IVacancyParams extends ParsedUrlQuery {
   id: string;
 }
+
+export type CatalogueType = {
+  key: number;
+  title: string;
+};

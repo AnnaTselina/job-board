@@ -1,11 +1,11 @@
-import Image from "next/image";
 import { Text } from "@mantine/core";
 import styles from "./styles.module.scss";
+import LogoSvg from "public/logo.svg";
 
 const Logo = () => {
   return (
     <div className={styles.logo}>
-      <Image src="/logo.svg" width={30} height={30} alt="jobored" />
+      <LogoSvg />
       <Text variant="logo">Jobored</Text>
     </div>
   );

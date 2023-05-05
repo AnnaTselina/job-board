@@ -1,7 +1,8 @@
 import { URL_PATHS } from "@/helpers/constants";
 import { VacancyType } from "@/types";
 import { Card, Text, Group, Indicator, ActionIcon, Title } from "@mantine/core";
-import Image from "next/image";
+import LocationSvg from "/public/icons/location.svg";
+import StarSvg from "/public/icons/star.svg";
 import Link from "next/link";
 
 const VacancyCard = ({
@@ -48,8 +49,8 @@ const VacancyCard = ({
         >
           {vacancy.profession}
         </Title>
-        <ActionIcon variant="transparent" onClick={onAddToSaved}>
-          <Image src="/icons/star.svg" alt="star" width={22} height={22} />
+        <ActionIcon variant="svg-transition" onClick={onAddToSaved}>
+          <StarSvg />
         </ActionIcon>
       </Group>
       <Group sx={{ marginBottom: "13px" }}>
@@ -63,13 +64,8 @@ const VacancyCard = ({
         <Text>{vacancy.type_of_work.title}</Text>
       </Group>
       <Group spacing={0}>
-        <Image
-          src="/icons/location.svg"
-          alt="location"
-          width={16}
-          height={19}
-        />
-        <Text sx={{ marginLeft: "12px" }}>{vacancy.town.title}</Text>
+        <LocationSvg />
+        <Text sx={{ marginLeft: "8px" }}>{vacancy.town.title}</Text>
       </Group>
     </Card>
   );

@@ -12,7 +12,7 @@ export const myTheme: MantineThemeOverride = {
       "#7B7C88",
       "#232134",
     ],
-    blue: ["#5E96FC", "#5E96FC", "#92C1FF", "#B7D6FF", "#C9E0FF", "#DEECFF"],
+    blue: ["#3B7CD3", "#5E96FC", "#92C1FF", "#B7D6FF", "#C9E0FF", "#DEECFF"],
   },
   spacing: { md: "24px" },
   radius: { md: "12px" },
@@ -38,7 +38,7 @@ export const myTheme: MantineThemeOverride = {
         active: (theme) => ({
           root: {
             fontWeight: 500,
-            color: theme.colors.blue[0],
+            color: theme.colors.blue[1],
           },
         }),
       },
@@ -67,11 +67,46 @@ export const myTheme: MantineThemeOverride = {
       variants: {
         primary: (theme) => ({
           root: {
-            backgroundColor: theme.colors.blue[0],
+            backgroundColor: theme.colors.blue[1],
             padding: "4px 20px",
             color: theme.colors.grey[0],
             borderRadius: "8px",
             fontWeight: 500,
+
+            ":hover": {
+              backgroundColor: theme.colors.blue[2],
+            },
+            ":focus": {
+              backgroundColor: theme.colors.blue[0],
+            },
+          },
+        }),
+        transparent: (theme) => ({
+          root: {
+            backgroundColor: "transparent",
+            fontSize: "14px",
+            lineHeight: "20px",
+            fontWeight: 500,
+            color: theme.colors.grey[4],
+            padding: 0,
+
+            "span:last-child": {
+              marginLeft: "4px",
+            },
+
+            ":hover": {
+              color: theme.colors.blue[2],
+              svg: {
+                stroke: theme.colors.blue[2],
+              },
+            },
+
+            ":focus": {
+              color: theme.colors.blue[1],
+              svg: {
+                stroke: theme.colors.blue[1],
+              },
+            },
           },
         }),
       },
@@ -80,9 +115,17 @@ export const myTheme: MantineThemeOverride = {
       styles: (theme) => ({
         input: {
           fontSize: "14px",
+          lineHeight: "21px",
           height: "48px",
           paddingLeft: "36px",
           borderColor: theme.colors.grey[2],
+          ":hover": {
+            borderColor: theme.colors.blue[1],
+          },
+          ":focus": {
+            borderColor: theme.colors.blue[1],
+            caretColor: theme.colors.blue[1],
+          },
         },
       }),
     },
@@ -111,7 +154,7 @@ export const myTheme: MantineThemeOverride = {
             fontSize: "20px",
             lineHeight: "24.2px",
             fontWeight: 600,
-            color: theme.colors.blue[0],
+            color: theme.colors.blue[1],
             marginBottom: "12.5px",
           },
         }),
@@ -131,10 +174,10 @@ export const myTheme: MantineThemeOverride = {
           height: "42px",
           borderColor: theme.colors.grey[3],
           ":hover": {
-            borderColor: theme.colors.blue[0],
+            borderColor: theme.colors.blue[1],
           },
           ":focus": {
-            borderColor: theme.colors.blue[0],
+            borderColor: theme.colors.blue[1],
           },
         },
         label: {
@@ -143,7 +186,57 @@ export const myTheme: MantineThemeOverride = {
           fontWeight: 700,
           marginBottom: "8px",
         },
+        dropdown: {
+          borderRadius: "8px",
+          boxShadow: "none",
+
+          ".mantine-ScrollArea-thumb": {
+            backgroundColor: theme.colors.grey[4],
+            borderRadius: "20px",
+            maxWidth: "4px",
+            right: "-2px",
+          },
+        },
+        item: {
+          borderRadius: "8px",
+          padding: "8px",
+          fontSize: "14px",
+          fontWeight: 400,
+          lineHeight: "20px",
+          whiteSpace: "initial",
+
+          "&[data-hovered]": {
+            backgroundColor: theme.colors.blue[5],
+          },
+          "&[data-selected]": {
+            backgroundColor: theme.colors.blue[1],
+          },
+        },
+        itemsWrapper: {
+          maxHeight: "188px",
+        },
       }),
+    },
+    ActionIcon: {
+      variants: {
+        "svg-transition": (theme) => ({
+          root: {
+            svg: {
+              ":hover": {
+                stroke: theme.colors.blue[1],
+              },
+            },
+          },
+        }),
+        "svg-active": (theme) => ({
+          root: {
+            svg: {
+              stroke: theme.colors.blue[1],
+              fill: theme.colors.blue[1],
+            },
+          },
+        }),
+      },
     },
   },
 };
